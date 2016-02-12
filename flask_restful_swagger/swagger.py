@@ -38,15 +38,15 @@ def docs(api, apiVersion='0.0', swaggerVersion='1.2',
     endpoint = swagger_endpoint(api, resource, path)
 
     # Add a .help.json help url
-    swagger_path = extract_swagger_path(path)
+    # swagger_path = extract_swagger_path(path)
 
     # Add a .help.html help url
-    endpoint_html_str = '{0}/help'.format(swagger_path)
-    api_add_resource(
-      endpoint,
-      "{0}.help.json".format(swagger_path),
-      "{0}.help.html".format(swagger_path),
-      endpoint=endpoint_html_str)
+    # endpoint_html_str = '{0}/help'.format(swagger_path)
+    # api_add_resource(
+    #  endpoint,
+    #  "{0}.help.json".format(swagger_path),
+    #  "{0}.help.html".format(swagger_path),
+    #  endpoint=endpoint_html_str)
 
     return api_add_resource(resource, path, *args, **kvargs)
 
@@ -240,6 +240,8 @@ class StaticFiles(Resource):
 
 class ResourceLister(Resource):
   def get(self):
+    if not authorize():
+      return 'Not authorized.', 401
     req_registry = _get_current_registry()
     return {
       "apiVersion": req_registry['apiVersion'],
@@ -346,6 +348,8 @@ def merge_parameter_list(base, override):
 
 class SwaggerRegistry(Resource):
   def get(self):
+    if not authorize():
+      return 'Not authorized.', 401
     req_registry = _get_current_registry()
     if request.path.endswith('.html'):
       return render_homepage(
@@ -551,6 +555,7 @@ def extract_path_arguments(path):
 
 
 def authorize():
+  print("ROFL LOASDLASNDLAKSNDLNASLKDNLKASNDL")
   try:
     verify_jwt()
   except:
