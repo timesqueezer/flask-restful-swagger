@@ -1088,6 +1088,11 @@ var SwaggerRequest = function(type, url, params, opts, successCallback, errorCal
   if (responseContentType)
     myHeaders["Accept"] = responseContentType;
 
+  var token = window.localStorage.getItem("token");
+  if (token) {
+    myHeaders.Authorization = "Bearer " + token;
+  }
+
   if (!((this.headers != null) && (this.headers.mock != null))) {
     obj = {
       url: this.url,
