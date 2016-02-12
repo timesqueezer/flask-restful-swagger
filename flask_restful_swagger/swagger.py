@@ -140,13 +140,15 @@ templates = {}
 
 
 def render_endpoint(endpoint):
-  authorize()
+  if not authorize():
+    return 'Not authorized.', 401
 
   return render_page("endpoint.html", endpoint.__dict__)
 
 
 def render_homepage(resource_list_url):
-  authorize()
+  if not authorize():
+    return 'Not authorized.', 401
 
   conf = {'resource_list_url': resource_list_url}
   return render_page("index.html", conf)
@@ -259,7 +261,8 @@ def swagger_endpoint(api, resource, path):
 
   class SwaggerResource(Resource):
     def get(self):
-      authorize()
+      if not authorize():
+        return 'Not authorized.', 401
       if request.path.endswith('.help.json'):
         return endpoint.__dict__
       if request.path.endswith('.help.html'):
@@ -551,6 +554,7 @@ def authorize():
   try:
     verify_jwt()
   except:
-    return 'Not authorized', 401
+    return False
   if not current_user.is_admin:
-    return 'Not authorized', 401
+    return False
+  return True
