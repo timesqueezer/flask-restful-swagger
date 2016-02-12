@@ -15,6 +15,8 @@ from flask.ext.restful import Resource, fields
 from flask_restful_swagger import (
   registry, api_spec_static)
 from jinja2 import Template
+from flask_jwt import verify_jwt
+from flask.ext.jwt import current_user
 
 resource_listing_endpoint = None
 
@@ -138,10 +140,24 @@ templates = {}
 
 
 def render_endpoint(endpoint):
+  try:
+    verify_jwt()
+  except:
+    return 'Not authorized', 401
+  if not current_user.is_admin:
+    return 'Not authorized', 401
+
   return render_page("endpoint.html", endpoint.__dict__)
 
 
 def render_homepage(resource_list_url):
+  try:
+    verify_jwt()
+  except:
+    return 'Not authorized', 401
+  if not current_user.is_admin:
+    return 'Not authorized', 401
+
   conf = {'resource_list_url': resource_list_url}
   return render_page("index.html", conf)
 

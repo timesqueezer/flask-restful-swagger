@@ -7,8 +7,8 @@ with open('README') as file:
     long_description = file.read()
 
 setup(name='flask-restful-swagger',
-      version='0.19',
-      url='https://github.com/rantav/flask-restful-swagger',
+      version='0.19.1',
+      url='https://github.com/timesqueezer/flask-restful-swagger',
       zip_safe=False,
       packages=['flask_restful_swagger'],
       package_data={
@@ -21,8 +21,8 @@ setup(name='flask-restful-swagger',
         ]
       },
       description='Extract swagger specs from your flast-restful project',
-      author='Ran Tavory',
+      author='Ran Tavory, Matz Radloff',
       license='MIT',
       long_description=long_description,
-      install_requires=['Flask-RESTful>=0.2.12']
+      install_requires=['Flask-RESTful>=0.2.12', 'Flask-JWT~=0.2.0']
       )
