@@ -142,6 +142,10 @@ SwaggerApi.prototype.build = function() {
       }
     }
   };
+  var token = window.localStorage.getItem("token");
+  if (token) {
+    obj.headers.Authorization = "Bearer " + token;
+  }
   var e = (typeof window !== 'undefined' ? window : exports);
   e.authorizations.apply(obj);
   new SwaggerHttp().execute(obj);
@@ -362,6 +366,10 @@ var SwaggerResource = function(resourceObj, api) {
         }
       }
     };
+    var token = window.localStorage.getItem("token");
+    if (token) {
+      obj.headers.Authorization = "Bearer " + token;
+    }
     var e = typeof window !== 'undefined' ? window : exports;
     e.authorizations.apply(obj);
     new SwaggerHttp().execute(obj);

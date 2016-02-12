@@ -17,6 +17,7 @@ from flask_restful_swagger import (
 from jinja2 import Template
 from flask_jwt import verify_jwt
 from flask.ext.jwt import current_user
+from bouncer.constants import READ
 
 resource_listing_endpoint = None
 
@@ -555,11 +556,10 @@ def extract_path_arguments(path):
 
 
 def authorize():
-  print("ROFL LOASDLASNDLAKSNDLNASLKDNLKASNDL")
   try:
     verify_jwt()
   except:
     return False
-  if not current_user.is_admin:
+  if not current_user.can(READ, 'ApiDocs'):
     return False
   return True
