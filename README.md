@@ -23,7 +23,7 @@ And in your program, where you'd usually just use flask-restful, add just a litt
 
 ```python
 from flask import Flask
-from flask.ext.restful import  Api
+from flask_restful import  Api
 from flask_restful_swagger import swagger
 
 app = Flask(__name__)
@@ -63,7 +63,7 @@ class Todo(Resource):
           ]
         )
     def get(self, todo_id):
-    
+
 # Operations not decorated with @swagger.operation do not get added to the swagger docs
 
 class Todo(Resource):

@@ -11,12 +11,12 @@ except ImportError:
 
 
 from flask import request, abort, Response
-from flask.ext.restful import Resource, fields
+from flask_restful import Resource, fields
 from flask_restful_swagger import (
-  registry, api_spec_static)
+  registry, api_spec_static
+)
 from jinja2 import Template
-from flask_jwt import verify_jwt
-from flask.ext.jwt import current_user
+from flask_jwt import verify_jwt, current_user
 from bouncer.constants import READ
 
 resource_listing_endpoint = None
